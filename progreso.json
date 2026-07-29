@@ -1,6 +1,6 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-07-29T19:49:29.607Z",
+  "exportedAt": "2026-07-29T20:00:50.122Z",
   "planStart": "",
   "logData": {
     "w1_d2_B__log0": {
@@ -23,6 +23,28 @@
         }
       ],
       "comment": "Contando barra de 15kg",
+      "kneeSensation": null
+    },
+    "w1_d2_B__log1": {
+      "sets": [
+        {
+          "kg": "30",
+          "reps": "10"
+        },
+        {
+          "kg": "30",
+          "reps": "10"
+        },
+        {
+          "kg": "30",
+          "reps": "10"
+        },
+        {
+          "kg": "30",
+          "reps": "10"
+        }
+      ],
+      "comment": "Contando barra 15kg",
       "kneeSensation": null
     }
   },

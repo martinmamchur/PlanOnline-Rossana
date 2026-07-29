@@ -1,6 +1,6 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-07-29T20:08:21.481Z",
+  "exportedAt": "2026-07-29T20:20:17.767Z",
   "planStart": "",
   "logData": {
     "w1_d2_B__log0": {
@@ -50,19 +50,37 @@
     "w1_d2_C__log0": {
       "sets": [
         {
-          "kg": "40",
+          "kg": "50",
           "reps": "12"
         },
         {
-          "kg": "40",
+          "kg": "60",
           "reps": "12"
         },
         {
-          "kg": "40",
+          "kg": "60",
           "reps": "12"
         }
       ],
-      "comment": "20kg cada lado",
+      "comment": "Kg en total ",
+      "kneeSensation": null
+    },
+    "w1_d2_C__log1": {
+      "sets": [
+        {
+          "kg": "40",
+          "reps": "15"
+        },
+        {
+          "kg": "40",
+          "reps": "15"
+        },
+        {
+          "kg": "40",
+          "reps": "15"
+        }
+      ],
+      "comment": "",
       "kneeSensation": null
     }
   },

@@ -1,8 +1,31 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-07-29T16:08:25.173Z",
+  "exportedAt": "2026-07-29T19:49:29.607Z",
   "planStart": "",
-  "logData": {},
+  "logData": {
+    "w1_d2_B__log0": {
+      "sets": [
+        {
+          "kg": "30",
+          "reps": "10"
+        },
+        {
+          "kg": "30",
+          "reps": "10"
+        },
+        {
+          "kg": "30",
+          "reps": "10"
+        },
+        {
+          "kg": "30",
+          "reps": "10"
+        }
+      ],
+      "comment": "Contando barra de 15kg",
+      "kneeSensation": null
+    }
+  },
   "videos": {
     "Abducción de cadera en máquina": "",
     "Aperturas en máquina pec deck": "",

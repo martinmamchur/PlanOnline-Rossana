@@ -1,6 +1,6 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-07-29T20:20:17.767Z",
+  "exportedAt": "2026-07-30T16:57:45.900Z",
   "planStart": "",
   "logData": {
     "w1_d2_B__log0": {
@@ -133,5 +133,7 @@
     "calentamiento__core2": "",
     "calentamiento__core3": ""
   },
-  "sessionDone": {}
+  "sessionDone": {
+    "w1_d2__done": true
+  }
 }

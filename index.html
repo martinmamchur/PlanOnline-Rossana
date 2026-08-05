@@ -205,6 +205,7 @@ input::placeholder,textarea::placeholder{color:var(--faint);}
       <button class="hbtn hbtn-lime" onclick="exportProgress()">⬇ EXPORTAR PROGRESO</button>
       <button class="hbtn hbtn-dim" onclick="triggerImport()">⬆ IMPORTAR</button>
       <button class="hbtn" onclick="ghSaveProgress()" style="border-color:#4ade80;color:#4ade80;">☁ SINCRONIZAR</button>
+      <button class="hbtn" onclick="reloadProgress()" style="border-color:#60a5fa;color:#60a5fa;">🔄 ACTUALIZAR</button>
       <button class="hbtn hbtn-dim" onclick="resetAll()">REINICIAR DATOS</button>
       <input id="import-file" type="file" accept=".json,application/json" style="display:none" onchange="handleImport(event)"/>
       <div id="sync-msg" style="font-size:12px;margin-top:4px;"></div>
@@ -1353,6 +1354,26 @@ async function ghLoadProgress(){
   }catch(e){ return null; }
 }
 
+async function reloadProgress(){
+  showSyncMsg('Actualizando desde GitHub...','');
+  try {
+    const ghProgress = await ghLoadProgress();
+    if (ghProgress && ghProgress.logData) {
+      state.logData = ghProgress.logData;
+      state.sessionDone = ghProgress.sessionDone || {};
+      if(ghProgress.planStart) state.planStart = ghProgress.planStart;
+      storageSet('logData', state.logData);
+      storageSet('sessionDone', state.sessionDone);
+      storageSet('planStart', state.planStart);
+      renderHeader();
+      renderPlan();
+      showSyncMsg('✓ Progreso actualizado','ok');
+    } else {
+      showSyncMsg('Sin progreso guardado en GitHub','');
+    }
+  } catch(e) { showSyncMsg('✗ Error al actualizar','err'); }
+}
+
 async function ghSaveProgress(){
   const token=getProgressToken();
   if(!token){ showSyncMsg('Pegá tu token de GitHub primero','err'); showTokenUI(); return; }
@@ -1479,13 +1500,24 @@ function _showError(msg, detail) {
 }
 
 async function _boot() {
-  // Cargar videos desde GitHub (fuente de verdad del coach)
-  // Si falla (sin internet), usa el cache local de localStorage
   try {
     const ghVideos = await ghGetVideos();
     if (ghVideos && typeof ghVideos === 'object') {
       state.videos = ghVideos;
       storageSet('videos', ghVideos);
+    }
+  } catch(e) { /* usa cache local */ }
+
+  // GitHub es la fuente de verdad del progreso
+  try {
+    const ghProgress = await ghLoadProgress();
+    if (ghProgress && ghProgress.logData) {
+      state.logData = ghProgress.logData;
+      state.sessionDone = ghProgress.sessionDone || {};
+      if(ghProgress.planStart) state.planStart = ghProgress.planStart;
+      storageSet('logData', state.logData);
+      storageSet('sessionDone', state.sessionDone);
+      storageSet('planStart', state.planStart);
     }
   } catch(e) { /* usa cache local */ }
 

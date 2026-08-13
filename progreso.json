@@ -1,6 +1,6 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-08-13T16:36:57.381Z",
+  "exportedAt": "2026-08-13T17:00:14.202Z",
   "planStart": "",
   "logData": {
     "w1_d2_B__log0": {
@@ -129,6 +129,60 @@
       ],
       "kneeSensation": null,
       "comment": "Contando barra W"
+    },
+    "w3_d2_C__log1": {
+      "sets": [
+        {
+          "kg": "31",
+          "reps": "15"
+        },
+        {
+          "kg": "31",
+          "reps": "15"
+        },
+        {
+          "kg": "31",
+          "reps": "15"
+        }
+      ],
+      "comment": "",
+      "kneeSensation": null
+    },
+    "w3_d2_C__log2": {
+      "sets": [
+        {
+          "kg": "",
+          "reps": ""
+        },
+        {
+          "kg": "",
+          "reps": ""
+        },
+        {
+          "kg": "",
+          "reps": ""
+        }
+      ],
+      "comment": "",
+      "kneeSensation": null
+    },
+    "w3_d2_C__log3": {
+      "sets": [
+        {
+          "kg": "22",
+          "reps": "20"
+        },
+        {
+          "kg": "22",
+          "reps": "20"
+        },
+        {
+          "kg": "22",
+          "reps": "20"
+        }
+      ],
+      "comment": "",
+      "kneeSensation": null
     }
   },
   "videos": {

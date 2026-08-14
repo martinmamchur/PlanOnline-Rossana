@@ -1,6 +1,6 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-08-13T17:21:29.037Z",
+  "exportedAt": "2026-08-14T18:12:50.394Z",
   "planStart": "",
   "logData": {
     "w1_d2_B__log0": {
@@ -183,6 +183,140 @@
       ],
       "comment": "",
       "kneeSensation": null
+    },
+    "w3_d0_B__log0": {
+      "sets": [
+        {
+          "kg": "10",
+          "reps": "8"
+        },
+        {
+          "kg": "10",
+          "reps": "8"
+        },
+        {
+          "kg": "10",
+          "reps": "8"
+        },
+        {
+          "kg": "10",
+          "reps": "8"
+        }
+      ],
+      "comment": "",
+      "kneeSensation": null
+    },
+    "w3_d0_B__log1": {
+      "sets": [
+        {
+          "kg": "27",
+          "reps": "8"
+        },
+        {
+          "kg": "27",
+          "reps": "8"
+        },
+        {
+          "kg": "27",
+          "reps": "8"
+        },
+        {
+          "kg": "27",
+          "reps": "8"
+        }
+      ],
+      "comment": "",
+      "kneeSensation": null
+    },
+    "w3_d0_B__log2": {
+      "sets": [
+        {
+          "kg": "12,5",
+          "reps": "12"
+        },
+        {
+          "kg": "12,5",
+          "reps": "12"
+        },
+        {
+          "kg": "12,5",
+          "reps": "12"
+        }
+      ],
+      "comment": "",
+      "kneeSensation": null
+    },
+    "w3_d0_C__log1": {
+      "sets": [
+        {
+          "kg": "4,5",
+          "reps": "10"
+        },
+        {
+          "kg": "4,5",
+          "reps": "10"
+        },
+        {
+          "kg": "4,5",
+          "reps": "10"
+        }
+      ],
+      "comment": "",
+      "kneeSensation": null
+    },
+    "w3_d0_C__log2": {
+      "sets": [
+        {
+          "kg": "13",
+          "reps": "12"
+        },
+        {
+          "kg": "13",
+          "reps": "12"
+        },
+        {
+          "kg": "13",
+          "reps": "12"
+        }
+      ],
+      "comment": "Contando barra w",
+      "kneeSensation": null
+    },
+    "w3_d0_C__log3": {
+      "sets": [
+        {
+          "kg": "18",
+          "reps": "12"
+        },
+        {
+          "kg": "18",
+          "reps": "12"
+        },
+        {
+          "kg": "18",
+          "reps": "12"
+        }
+      ],
+      "comment": "",
+      "kneeSensation": null
+    },
+    "w3_d0_C__log0": {
+      "sets": [
+        {
+          "kg": "7,5",
+          "reps": "10"
+        },
+        {
+          "kg": "7,5",
+          "reps": "10"
+        },
+        {
+          "kg": "7,5",
+          "reps": "10"
+        }
+      ],
+      "comment": "",
+      "kneeSensation": null
     }
   },
   "videos": {
@@ -239,6 +373,7 @@
     "w1_d3__done": true,
     "w2_d1__done": true,
     "w3_d1__done": true,
-    "w3_d2__done": true
+    "w3_d2__done": true,
+    "w3_d0__done": true
   }
 }

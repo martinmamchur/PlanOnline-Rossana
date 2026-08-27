@@ -1,6 +1,6 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-08-27T16:43:12.435Z",
+  "exportedAt": "2026-08-27T16:45:10.487Z",
   "planStart": "",
   "logData": {
     "w1_d2_B__log0": {
@@ -429,6 +429,24 @@
         {
           "kg": "15",
           "reps": "10"
+        }
+      ],
+      "comment": "",
+      "kneeSensation": null
+    },
+    "w5_d0_C__log0": {
+      "sets": [
+        {
+          "kg": "",
+          "reps": "15"
+        },
+        {
+          "kg": "",
+          "reps": "15"
+        },
+        {
+          "kg": "",
+          "reps": ""
         }
       ],
       "comment": "",

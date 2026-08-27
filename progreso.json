@@ -1,6 +1,6 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-08-27T15:35:20.844Z",
+  "exportedAt": "2026-08-27T15:35:43.303Z",
   "planStart": "",
   "logData": {
     "w1_d2_B__log0": {
@@ -374,6 +374,7 @@
     "w2_d1__done": true,
     "w3_d1__done": true,
     "w3_d2__done": true,
-    "w3_d0__done": true
+    "w3_d0__done": true,
+    "w5_d1__done": true
   }
 }

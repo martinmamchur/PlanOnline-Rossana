@@ -1,6 +1,6 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-09-01T16:23:26.442Z",
+  "exportedAt": "2026-09-01T16:35:31.437Z",
   "planStart": "",
   "logData": {
     "w1_d2_B__log0": {
@@ -451,6 +451,28 @@
       ],
       "comment": "",
       "kneeSensation": null
+    },
+    "w6_d2_B__log0": {
+      "sets": [
+        {
+          "kg": "40",
+          "reps": "8"
+        },
+        {
+          "kg": "40",
+          "reps": "8"
+        },
+        {
+          "kg": "40",
+          "reps": "8"
+        },
+        {
+          "kg": "40",
+          "reps": "8"
+        }
+      ],
+      "comment": "Contando Barra de 20kg",
+      "kneeSensation": null
     }
   },
   "videos": {
@@ -510,8 +532,6 @@
     "w3_d2__done": true,
     "w3_d0__done": true,
     "w5_d1__done": true,
-    "w5_d0__done": true,
-    "w5_d4__done": false,
-    "w6_d4__done": true
+    "w5_d0__done": true
   }
 }

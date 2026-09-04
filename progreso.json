@@ -1,6 +1,6 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-09-04T16:07:06.487Z",
+  "exportedAt": "2026-09-04T16:09:17.372Z",
   "planStart": "",
   "logData": {
     "w1_d2_B__log0": {
@@ -598,7 +598,7 @@
       "sets": [
         {
           "kg": "27.2",
-          "reps": ""
+          "reps": "10"
         },
         {
           "kg": "27.2",

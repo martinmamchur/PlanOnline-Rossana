@@ -351,7 +351,7 @@ const m1_d3 = {
   ],
   blockC:[
     ex('Prensa de piernas',3,'10-12','RIR 2','75 seg'),
-    ex('Curl femoral acostado en máquina',3,'12-15','RIR 2','60 seg'),
+    ex('Banco de femorales',3,'12-15','RIR 2','60 seg'),
     ex('Hip thrust c/barra',3,'12','RIR 2','75 seg'),
     ex('Abducción de cadera en máquina',3,'15-20','RIR 1','45 seg'),
   ],
@@ -733,6 +733,65 @@ function renderPlan() {
 /* ============================================================
    RENDER: SESSION
    ============================================================ */
+
+
+
+
+
+
+function renderExerciseList(frag, exercises, week, dayIdx, phase) {
+  let i = 0;
+  while (i < exercises.length) {
+    const ex = exercises[i];
+    const ssGroup = getSupersetGroup(ex.name); // null si no es SS, "A1"/"A2" etc si lo es
+
+    if (ssGroup) {
+      // Recopilar todos los ejercicios de esta superserie
+      const groupExs = [];
+      while (i < exercises.length && getSupersetGroup(exercises[i].name) === ssGroup) {
+        groupExs.push({ ex: exercises[i], idx: i });
+        i++;
+      }
+
+      // Contenedor visual de superserie
+      const groupEl = document.createElement('div');
+      groupEl.className = 'supersetie-group';
+
+      // Label
+      const labelEl = document.createElement('div');
+      labelEl.className = 'superserie-label';
+      labelEl.innerHTML = '⚡ SUPERSERIE ' + ssGroup + ' — ' + groupExs.length + ' ejercicios seguidos';
+      groupEl.appendChild(labelEl);
+
+      // Instrucciones
+      const instrEl = document.createElement('div');
+      instrEl.className = 'superserie-instructions';
+      const restText = groupExs[groupExs.length-1].ex.rest || '60 seg';
+      instrEl.innerHTML = '<strong>¿Cómo ejecutar la superserie?</strong><br>' +
+        '1. Hacé todas las reps del Ejercicio 1 → sin descanso pasás inmediatamente al Ejercicio 2 (y siguientes si hay más).<br>' +
+        '2. Eso completa <strong>1 ronda</strong> de la superserie.<br>' +
+        '3. Descansás <strong>' + restText + '</strong> — este es el único descanso entre rondas.<br>' +
+        '4. Volvés al Ejercicio 1 y repetís hasta completar todas las series indicadas.<br>' +
+        '<em>⚠️ No hay descanso entre los ejercicios dentro de cada ronda.</em>';
+      groupEl.appendChild(instrEl);
+
+      // Tarjetas de ejercicios
+      groupExs.forEach(({ ex: e, idx }) => {
+        const exName = getSSBaseName(e.name);
+        const modEx = Object.assign({}, e, { name: exName });
+        groupEl.appendChild(renderExCard(week, dayIdx, phase, idx, modEx));
+      });
+
+      frag.appendChild(groupEl);
+    } else {
+      frag.appendChild(renderExCard(week, dayIdx, phase, i, ex));
+      i++;
+    }
+  }
+}
+
+
+
 function renderSession(week, dayIdx, session) {
   const frag = document.createDocumentFragment();
   const isUpper = session.dayType === 'upper';
@@ -762,6 +821,12 @@ function renderSession(week, dayIdx, session) {
   titleRow.appendChild(h('div', {id:'session-title'}, session.dayFocus));
   titleRow.appendChild(doneBtn);
   frag.appendChild(titleRow);
+
+  // Aviso de sesión incompleta
+  const warnEl = document.createElement('div');
+  warnEl.id = 'session-incomplete-warn';
+  warnEl.style.cssText = 'background:rgba(255,68,38,0.1);border:1px solid var(--accent);border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:13px;color:var(--accent);display:none;';
+  frag.appendChild(warnEl);
 
   // Coach note
   const noteText = isCardio ? 'Respetá el ritmo indicado de RPE.' : isUpper
@@ -980,6 +1045,87 @@ function closeVideoModal(){
 }
 document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeVideoModal(); });
 
+// ── Detectar si un nombre es parte de superserie ─────────────────────────────
+function isSS(name) { return /^SS [AB]\d:/i.test(name); }
+function getSupersetGroup(name) { const m = name.match(/^SS ([AB]\d):/i); return m ? m[1] : null; }
+function getSSBaseName(name) { return name.replace(/^SS [AB]\d:\s*/i, ''); }
+
+// ── Explicaciones de técnicas avanzadas ──────────────────────────────────────
+function getTechNote(name, reps) {
+  const n = (name + ' ' + (reps||'')).toLowerCase();
+  if (/myo.rep/i.test(n)) return {
+    title: '¿Cómo ejecutar los Myo-reps?',
+    text: '1. Hacé el número de reps indicado (ej: 10) con buena técnica — esto es el "set activador". Dejá 1-2 reps en el tanque, no llegues al fallo total.\n2. Descansá SOLO 5 segundos contando en tu cabeza (es intencional que sea poco).\n3. Hacé 3-5 reps más — esto es un "mini-set".\n4. Descansá otros 5 segundos.\n5. Repetí los mini-sets 3 o 4 veces más, o hasta que ya no puedas completar 3 reps seguidas con buena forma.\n⏱ DESCANSO ENTRE SERIES: Una vez que terminaste todos los mini-sets, recién ahí descansás el tiempo indicado (ej: 60 seg) antes de empezar la siguiente serie completa desde el paso 1.'
+  };
+  if (/drop.set/i.test(n)) return {
+    title: '¿Cómo ejecutar un Drop Set?',
+    text: '1. Hacé las reps indicadas con tu peso habitual hasta el fallo técnico (o hasta el número indicado).\n2. SIN descansar, bajá el peso inmediatamente un 20-30% (ej: si usabas 20 kg, pasás a 14-16 kg).\n3. Seguí haciendo reps con el peso más liviano hasta el fallo nuevamente.\n⚠️ Todo eso JUNTO (peso original + bajada) cuenta como UNA sola serie.\n⏱ DESCANSO ENTRE SERIES: Recién después de terminar el drop completo (ambos pesos) descansás el tiempo indicado antes de la siguiente serie.'
+  };
+  if (/tempo|tempo lento/i.test(n)) return {
+    title: '¿Qué es el tempo lento?',
+    text: 'En cada repetición, bajá el peso contando 3 segundos lentamente (fase de bajada). Arriba podés subir con normalidad. Esto no cambia los descansos entre series — seguís descansando el tiempo indicado entre cada serie completa.\nEjemplo en sentadilla: bajás 3 segundos hasta abajo, subís normal. Eso es 1 rep.'
+  };
+  if (/pausa/i.test(n) && /\d\s*seg/i.test(n)) return {
+    title: 'Técnica de pausa',
+    text: 'En el punto de máxima tensión del ejercicio, mantenés la posición el tiempo indicado DENTRO de cada repetición (ej: 2 seg arriba en el hip thrust) antes de continuar.\n⏱ DESCANSO ENTRE SERIES: No cambia — seguís descansando el tiempo indicado entre series completas.'
+  };
+  return null;
+}
+
+// ── Buscar historial del ejercicio en sesiones anteriores ────────────────────
+function findLastRecord(exName, currentWeek, currentDayIdx, currentPhase, currentIdx) {
+  const currentLogKey = 'w' + currentWeek + '_d' + currentDayIdx + '_' + currentPhase + '__log' + currentIdx;
+  const nameNorm = exName.toLowerCase().trim().replace(/^ss [ab]\d:\s*/i, '');
+  const results = [];
+
+  // Iterar todas las claves del logData
+  for (const key of Object.keys(state.logData)) {
+    if (key === currentLogKey) continue;
+    // Solo claves de log de ejercicios (formato: wN_dN_X__logN)
+    if (!key.match(/^w\d+_d\d+_[BCD]__log\d+$/)) continue;
+
+    const entry = state.logData[key];
+    if (!entry) continue;
+    if (!entry.sets || !entry.sets.some(s => s.kg || s.reps)) continue;
+
+    // Ver si tiene nombre guardado (el alumno lo editó)
+    const nameKey = key + '__name';
+    const savedName = (state.logData[nameKey] && state.logData[nameKey].v) || '';
+    if (savedName) {
+      const savedNorm = savedName.toLowerCase().trim().replace(/^ss [ab]\d:\s*/i, '');
+      if (savedNorm === nameNorm) {
+        // Extraer semana y día de la clave para ordenar
+        const m = key.match(/^w(\d+)_d(\d+)/);
+        results.push({ week: parseInt(m[1]), day: parseInt(m[2]), key, entry });
+        continue;
+      }
+    }
+
+    // Si no tiene nombre guardado, buscar en el plan por posición
+    try {
+      const m = key.match(/^w(\d+)_d(\d+)_([BCD])__log(\d+)$/);
+      if (!m) continue;
+      const w = parseInt(m[1]), d = parseInt(m[2]), ph = m[3], idx = parseInt(m[4]);
+      const sessDays = getSessions(w);
+      if (!sessDays || !sessDays[d]) continue;
+      const sess = sessDays[d];
+      const blockKey = ph === 'B' ? 'blockB' : ph === 'C' ? 'blockC' : 'blockD';
+      const block = sess[blockKey];
+      if (!block || !block[idx]) continue;
+      const planName = (block[idx].name || '').toLowerCase().trim().replace(/^ss [ab]\d:\s*/i, '');
+      if (planName === nameNorm) {
+        results.push({ week: w, day: d, key, entry });
+      }
+    } catch(e) {}
+  }
+
+  if (!results.length) return null;
+  // Devolver el más reciente (mayor semana, luego mayor día)
+  results.sort((a, b) => a.week !== b.week ? a.week - b.week : a.day - b.day);
+  return results[results.length - 1];
+}
+
+
 function renderExCard(week, dayIdx, phase, idx, exObj) {
   const dayKey = `w${week}_d${dayIdx}_${phase}`;
   const logKey = `${dayKey}__log${idx}`;
@@ -993,7 +1139,6 @@ function renderExCard(week, dayIdx, phase, idx, exObj) {
   // Header
   const top = h('div', {className:'ex-top'});
   const nameWrap = h('div', {className:'ex-name'});
-  if (exObj.kneeAlert) nameWrap.appendChild(document.createTextNode('🦴 '));
   // Nombre editable — se guarda en logData con clave __name
   const nameKey = logKey + '__name';
   const savedName = (state.logData[nameKey] && state.logData[nameKey].v) || exObj.name;
@@ -1163,6 +1308,44 @@ function renderExCard(week, dayIdx, phase, idx, exObj) {
   });
   logSection.appendChild(comment);
   card.appendChild(logSection);
+
+  // Técnica avanzada
+  const techNote = getTechNote(exObj.name, exObj.reps);
+  if (techNote) {
+    const tn = document.createElement('div');
+    tn.style.cssText = 'background:rgba(200,255,61,0.06);border-left:3px solid var(--lime);border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0;font-size:12.5px;color:var(--text);line-height:1.6;';
+    const tnTitle = document.createElement('strong');
+    tnTitle.style.cssText = 'color:var(--lime);display:block;margin-bottom:4px;';
+    tnTitle.textContent = '📖 ' + techNote.title;
+    tn.appendChild(tnTitle);
+    tn.appendChild(document.createTextNode(techNote.text));
+    card.appendChild(tn);
+  }
+  const histBtn = document.createElement('button');
+  histBtn.style.cssText = 'background:none;border:1px solid var(--faint);color:var(--dim);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;margin-top:6px;display:flex;align-items:center;gap:4px;';
+  histBtn.textContent = '🕐 Ver última vez';
+  let histVisible = false;
+  const histPanel = document.createElement('div');
+  histPanel.style.cssText = 'background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:6px;font-size:12px;color:var(--dim);line-height:1.6;display:none;';
+  histBtn.addEventListener('click', function() {
+    histVisible = !histVisible;
+    if (histVisible) {
+      const rec = findLastRecord(exObj.name, week, dayIdx, phase, idx);
+      if (!rec) {
+        histPanel.innerHTML = '<div style="font-size:11px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Sin registro previo</div><div>Este es el primer registro de este ejercicio.</div>';
+      } else {
+        let html = '<div style="font-size:11px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Última vez: Semana ' + rec.week + ' · Día ' + (rec.day+1) + '</div>';
+        if (rec.entry.sets) rec.entry.sets.forEach((s,i) => {
+          if (s.kg||s.reps) html += '<div style="color:var(--text);">Serie '+(i+1)+': <strong>'+(s.kg||'—')+' kg</strong> × <strong>'+(s.reps||'—')+' reps</strong></div>';
+        });
+        if (rec.entry.comment) html += '<div style="margin-top:6px;color:var(--dim);font-style:italic;">💬 '+rec.entry.comment+'</div>';
+        histPanel.innerHTML = html;
+      }
+      histPanel.style.display='block'; histBtn.textContent='🕐 Ocultar historial';
+    } else { histPanel.style.display='none'; histBtn.textContent='🕐 Ver última vez'; }
+  });
+  card.appendChild(histBtn);
+  card.appendChild(histPanel);
 
   return card;
 }

@@ -1,6 +1,6 @@
 {
   "app": "plan-juanchi",
-  "exportedAt": "2026-09-08T16:33:52.403Z",
+  "exportedAt": "2026-09-08T16:34:17.375Z",
   "planStart": "",
   "logData": {
     "w1_d2_B__log0": {
@@ -668,7 +668,7 @@
         },
         {
           "kg": "32.5",
-          "reps": ""
+          "reps": "8"
         }
       ],
       "comment": "Incluyendo barra de 20",
